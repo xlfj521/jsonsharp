@@ -1,5 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-bin\Debug\JSONSharp.dll
-bin\Debug\JSONSharp.pdb
-obj\Debug\JSONSharp.dll
-obj\Debug\JSONSharp.pdb
