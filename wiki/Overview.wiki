@@ -1,0 +1,6 @@
+=Overview=
+
+JSONSharp is a C# library for constructing JSON-compliant data strings.  It's lightweight and object-oriented, using a set of abstract classes to separate data from implementation. The library was created out of a need for a generic and flexible way to generate JSON from a server-side .Net application.
+
+
+==Structure==
