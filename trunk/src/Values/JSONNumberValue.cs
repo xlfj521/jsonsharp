@@ -21,6 +21,7 @@ If you have questions about the library, please contact me at jeff.rodenburg@gma
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using JSONSharp;
 
@@ -33,6 +34,17 @@ namespace JSONSharp.Values
     public class JSONNumberValue : JSONValue
     {
         private string _value;
+
+        /// <summary>
+        /// Number formatting object for handling globalization differences with decimal point separators
+        /// </summary>
+        protected static NumberFormatInfo JavaScriptNumberFormatInfo;
+
+        static JSONNumberValue()
+        {
+            JavaScriptNumberFormatInfo = new NumberFormatInfo();
+            JavaScriptNumberFormatInfo.NumberDecimalSeparator = ".";
+        }
 
         internal JSONNumberValue(string value)
             : base()
@@ -54,7 +66,7 @@ namespace JSONSharp.Values
         /// </summary>
         /// <param name="value">double (System.Double) value</param>
         public JSONNumberValue(double value)
-            : this(value.ToString(""))
+            : this(value.ToString(JSONNumberValue.JavaScriptNumberFormatInfo))
         {
         }
 
@@ -63,7 +75,7 @@ namespace JSONSharp.Values
         /// </summary>
         /// <param name="value">decimal (System.Decimal) value</param>
         public JSONNumberValue(decimal value)
-            : this(value.ToString(""))
+            : this(value.ToString(JSONNumberValue.JavaScriptNumberFormatInfo))
         {
         }
 
@@ -72,7 +84,7 @@ namespace JSONSharp.Values
         /// </summary>
         /// <param name="value">single (System.Single) value</param>
         public JSONNumberValue(Single value)
-            : this(value.ToString("E"))
+            : this(value.ToString("E", JSONNumberValue.JavaScriptNumberFormatInfo))
         {
         }
 
