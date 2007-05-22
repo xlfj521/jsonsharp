@@ -4,6 +4,21 @@
         <name>JSONSharp</name>
     </assembly>
     <members>
+        <member name="T:JSONSharp.Collections.JSONArrayCollection">
+            <summary>
+            JSONArrayCollection is an ordered collection of values. An array begins with 
+            "[" (left bracket) and ends with "]" (right bracket). Array elements are 
+            separated by "," (comma).
+            </summary>
+        </member>
+        <member name="T:JSONSharp.JSONValueCollection">
+            <summary>
+            JSONValueCollection represents any collection in JSONSharp.  It is used to 
+            represent arrays of values to be contained within a JSON-compliant string of characters.
+            
+            A JSONValueCollection is itself a JSONValue object.
+            </summary>
+        </member>
         <member name="T:JSONSharp.JSONValue">
             <summary>
             JSONValue represents the core object in JSONSharp.  It is used to represent values
@@ -36,21 +51,6 @@
             contained object data in JSON-compliant form but with indentation for readability.
             </summary>
             <returns>The value as a string, indented for readability.</returns>
-        </member>
-        <member name="T:JSONSharp.Collections.JSONObjectCollection">
-            <summary>
-            JSONObjectCollection is an unordered set of name/value pairs. An object begins 
-            with "{" (left brace) and ends with "}" (right brace). Each name is followed 
-            by ":" (colon) and the name/value pairs are separated by "," (comma).
-            </summary>
-        </member>
-        <member name="T:JSONSharp.JSONValueCollection">
-            <summary>
-            JSONValueCollection represents any collection in JSONSharp.  It is used to 
-            represent arrays of values to be contained within a JSON-compliant string of characters.
-            
-            A JSONValueCollection is itself a JSONValue object.
-            </summary>
         </member>
         <member name="F:JSONSharp.JSONValueCollection.JSONVALUE_SEPARATOR">
             <summary>
@@ -98,45 +98,49 @@
             denoting the trailing wrapping character for the collection type.
             </summary>
         </member>
-        <member name="M:JSONSharp.Collections.JSONObjectCollection.#ctor(System.Collections.Generic.Dictionary{JSONSharp.Values.JSONStringValue,JSONSharp.JSONValue})">
+        <member name="F:JSONSharp.Collections.JSONArrayCollection._values">
             <summary>
-            Public constructor that accepts a Dictionary of name/value pairs.
+            Internal generic list of JSONValue objects that comprise the elements
+            of the JSONArrayCollection.
             </summary>
-            <param name="namevaluepairs">Dictionary collection of name/value pairs (JSONStringValue=name,JSONValue=pair)</param>
         </member>
-        <member name="M:JSONSharp.Collections.JSONObjectCollection.#ctor">
+        <member name="M:JSONSharp.Collections.JSONArrayCollection.#ctor(System.Collections.Generic.List{JSONSharp.JSONValue})">
+            <summary>
+            Public constructor that accepts a generic list of JSONValue objects.
+            </summary>
+            <param name="values">Generic list of JSONValue objects.</param>
+        </member>
+        <member name="M:JSONSharp.Collections.JSONArrayCollection.#ctor">
             <summary>
             Empty public constructor. Use this method in conjunction with
-            the Add method to populate the internal dictionary of name/value pairs.
+            the Add method to populate the internal array of elements.
             </summary>
         </member>
-        <member name="M:JSONSharp.Collections.JSONObjectCollection.Add(JSONSharp.Values.JSONStringValue,JSONSharp.JSONValue)">
+        <member name="M:JSONSharp.Collections.JSONArrayCollection.Add(JSONSharp.JSONValue)">
             <summary>
-            Adds a JSONStringValue as the "name" and a JSONValue as the "value" to the 
-            internal Dictionary.  Values are checked to ensure no duplication occurs 
-            in the internal Dictionary.
+            Adds a JSONValue to the internal object array.  Values are checked to 
+            ensure no duplication occurs in the internal array.
             </summary>
-            <param name="name">JSONStringValue "name" to add to the internal dictionary</param>
-            <param name="value">JSONValue "value" to add to the internal dictionary</param>
+            <param name="value">JSONValue to add to the internal array</param>
         </member>
-        <member name="M:JSONSharp.Collections.JSONObjectCollection.CollectionToPrettyPrint">
+        <member name="M:JSONSharp.Collections.JSONArrayCollection.CollectionToPrettyPrint">
             <summary>
             Required override of the CollectionToPrettyPrint() method.
             </summary>
-            <returns>the entire dictionary as a string in JSON-compliant format, with indentation for readability</returns>
+            <returns>the entire collection as a string in JSON-compliant format, with indentation for readability</returns>
         </member>
-        <member name="M:JSONSharp.Collections.JSONObjectCollection.CollectionToString">
+        <member name="M:JSONSharp.Collections.JSONArrayCollection.CollectionToString">
             <summary>
             Required override of the CollectionToString() method.
             </summary>
             <returns>the entire collection as a string in JSON-compliant format</returns>
         </member>
-        <member name="P:JSONSharp.Collections.JSONObjectCollection.BeginMarker">
+        <member name="P:JSONSharp.Collections.JSONArrayCollection.BeginMarker">
             <summary>
             Required override of the BeginMarker property
             </summary>
         </member>
-        <member name="P:JSONSharp.Collections.JSONObjectCollection.EndMarker">
+        <member name="P:JSONSharp.Collections.JSONArrayCollection.EndMarker">
             <summary>
             Required override of the EndMarker property
             </summary>
@@ -245,56 +249,52 @@
             </summary>
             <returns>this.ToString()</returns>
         </member>
-        <member name="T:JSONSharp.Collections.JSONArrayCollection">
+        <member name="T:JSONSharp.Collections.JSONObjectCollection">
             <summary>
-            JSONArrayCollection is an ordered collection of values. An array begins with 
-            "[" (left bracket) and ends with "]" (right bracket). Array elements are 
-            separated by "," (comma).
+            JSONObjectCollection is an unordered set of name/value pairs. An object begins 
+            with "{" (left brace) and ends with "}" (right brace). Each name is followed 
+            by ":" (colon) and the name/value pairs are separated by "," (comma).
             </summary>
         </member>
-        <member name="F:JSONSharp.Collections.JSONArrayCollection._values">
+        <member name="M:JSONSharp.Collections.JSONObjectCollection.#ctor(System.Collections.Generic.Dictionary{JSONSharp.Values.JSONStringValue,JSONSharp.JSONValue})">
             <summary>
-            Internal generic list of JSONValue objects that comprise the elements
-            of the JSONArrayCollection.
+            Public constructor that accepts a Dictionary of name/value pairs.
             </summary>
+            <param name="namevaluepairs">Dictionary collection of name/value pairs (JSONStringValue=name,JSONValue=pair)</param>
         </member>
-        <member name="M:JSONSharp.Collections.JSONArrayCollection.#ctor(System.Collections.Generic.List{JSONSharp.JSONValue})">
-            <summary>
-            Public constructor that accepts a generic list of JSONValue objects.
-            </summary>
-            <param name="values">Generic list of JSONValue objects.</param>
-        </member>
-        <member name="M:JSONSharp.Collections.JSONArrayCollection.#ctor">
+        <member name="M:JSONSharp.Collections.JSONObjectCollection.#ctor">
             <summary>
             Empty public constructor. Use this method in conjunction with
-            the Add method to populate the internal array of elements.
+            the Add method to populate the internal dictionary of name/value pairs.
             </summary>
         </member>
-        <member name="M:JSONSharp.Collections.JSONArrayCollection.Add(JSONSharp.JSONValue)">
+        <member name="M:JSONSharp.Collections.JSONObjectCollection.Add(JSONSharp.Values.JSONStringValue,JSONSharp.JSONValue)">
             <summary>
-            Adds a JSONValue to the internal object array.  Values are checked to 
-            ensure no duplication occurs in the internal array.
+            Adds a JSONStringValue as the "name" and a JSONValue as the "value" to the 
+            internal Dictionary.  Values are checked to ensure no duplication occurs 
+            in the internal Dictionary.
             </summary>
-            <param name="value">JSONValue to add to the internal array</param>
+            <param name="name">JSONStringValue "name" to add to the internal dictionary</param>
+            <param name="value">JSONValue "value" to add to the internal dictionary</param>
         </member>
-        <member name="M:JSONSharp.Collections.JSONArrayCollection.CollectionToPrettyPrint">
+        <member name="M:JSONSharp.Collections.JSONObjectCollection.CollectionToPrettyPrint">
             <summary>
             Required override of the CollectionToPrettyPrint() method.
             </summary>
-            <returns>the entire collection as a string in JSON-compliant format, with indentation for readability</returns>
+            <returns>the entire dictionary as a string in JSON-compliant format, with indentation for readability</returns>
         </member>
-        <member name="M:JSONSharp.Collections.JSONArrayCollection.CollectionToString">
+        <member name="M:JSONSharp.Collections.JSONObjectCollection.CollectionToString">
             <summary>
             Required override of the CollectionToString() method.
             </summary>
             <returns>the entire collection as a string in JSON-compliant format</returns>
         </member>
-        <member name="P:JSONSharp.Collections.JSONArrayCollection.BeginMarker">
+        <member name="P:JSONSharp.Collections.JSONObjectCollection.BeginMarker">
             <summary>
             Required override of the BeginMarker property
             </summary>
         </member>
-        <member name="P:JSONSharp.Collections.JSONArrayCollection.EndMarker">
+        <member name="P:JSONSharp.Collections.JSONObjectCollection.EndMarker">
             <summary>
             Required override of the EndMarker property
             </summary>
