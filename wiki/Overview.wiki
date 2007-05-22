@@ -1,10 +1,27 @@
-=Overview=
+=JSONSharp=
 
 JSONSharp is a C# library for constructing JSON-compliant data strings.  It's lightweight and object-oriented, using a set of abstract classes to separate data from implementation. The library was created out of a need for a generic and flexible way to generate JSON from a server-side .Net application.
 
 
 ==Structure==
-JSONSharp objects have two jobs: (1) accept/hold data values, and (2) write them as JSON-compliant strings.
+JSONSharp objects have two jobs: 
+ # accept/hold data values, and 
+ # write them as JSON-compliant strings.
 
-The base object of JSONSharp is the JSONValue.  Everything in JSONSharp inherits from JSONValue.  JSONValue is an 
-abstract class, requiring implementors to override two methods: ToString() and PrettyPrint().
+The base object of JSONSharp is the JSONValue.  Everything in JSONSharp inherits from JSONValue.  JSONValue is an abstract class, requiring implementors to override two methods: ToString() and PrettyPrint().
+
+The second most-important base object is the JSONValueCollection.  JSONValueCollection represents the multi-element objects permitted in JSON (object collections and arrays) and is itself a JSONValue.  JSONValueCollection is an abstract class, requiring implementors to override two additional methods: CollectionToString() and CollectionToPrettyPrint().
+
+==Value types==
+JSONSharp supports three value types: strings, numbers, and booleans.
+
+ * JSONStringValue takes a string and will write the value in JSON-compliant format (from ToString()).
+ * JSONNumberValue takes either an int, single, double, decimal, or byte and writes the value in proper numeric format, per the JSON RFC specification.
+ * JSONBooleanValue takes a boolean and writes either "true" or "false".
+
+==Collection types==
+JSONSharp supports two collection types: object collections and arrays.
+
+ * JSONObjectCollection accepts a Dictionary of name/value pairs, passed as either an instance of type Dictionary<JSONStringValue,JSONValue> or through individual Add() method calls.  The "name" of an entry is a JSONStringValue; the "value" of the pair is any JSONValue, which could be a JSONSharp value type OR collection type.
+ * JSONArrayCollection accepts a generic List of JSONValue objects, passed as either an instance of type List<JSONValue> or through individual Add() method calls.
+
