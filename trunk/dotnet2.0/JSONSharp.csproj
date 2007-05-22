@@ -52,13 +52,13 @@ If you have questions about the library, please contact me at jeff.rodenburg@gma
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\JSONArrayCollection.cs" />
-    <Compile Include="Values\JSONBoolValue.cs" />
-    <Compile Include="Values\JSONNumberValue.cs" />
-    <Compile Include="Collections\JSONObjectCollection.cs" />
-    <Compile Include="Values\JSONStringValue.cs" />
-    <Compile Include="JSONValue.cs" />
-    <Compile Include="JSONValueCollection.cs" />
+    <Compile Include="..\src\Collections\JSONArrayCollection.cs" />
+    <Compile Include="..\src\Collections\JSONObjectCollection.cs" />
+    <Compile Include="..\src\Values\JSONBoolValue.cs" />
+    <Compile Include="..\src\Values\JSONNumberValue.cs" />
+    <Compile Include="..\src\Values\JSONStringValue.cs" />
+    <Compile Include="..\src\JSONValue.cs" />
+    <Compile Include="..\src\JSONValueCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

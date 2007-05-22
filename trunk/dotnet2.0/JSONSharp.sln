@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONSharp", "JSONSharp.csproj", "{7844F23D-587D-4376-A3A4-3EDD81F15369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONSharpExample", "..\example\JSONSharpExample\JSONSharpExample.csproj", "{214DE47E-4A6F-440E-8B97-F95F1670FD62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONSharpExample", "JSONSharpExample\JSONSharpExample.csproj", "{214DE47E-4A6F-440E-8B97-F95F1670FD62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

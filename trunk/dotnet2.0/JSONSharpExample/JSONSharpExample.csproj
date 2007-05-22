@@ -35,7 +35,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\trunk\JSONSharp.csproj">
+    <ProjectReference Include="..\JSONSharp.csproj">
       <Project>{7844F23D-587D-4376-A3A4-3EDD81F15369}</Project>
       <Name>JSONSharp</Name>
     </ProjectReference>
