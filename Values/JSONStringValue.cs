@@ -6,7 +6,7 @@ using JSONSharp;
 namespace JSONSharp.Values
 {
     /// <summary>
-    /// A JSON string is a collection of zero or more Unicode characters, wrapped in double quotes, 
+    /// JSONStringValue is a collection of zero or more Unicode characters, wrapped in double quotes, 
     /// using backslash escapes. A character is represented as a single character string. A string 
     /// is very much like a C# string.
     /// </summary>
@@ -14,22 +14,40 @@ namespace JSONSharp.Values
     {
         private string _value;
 
+        /// <summary>
+        /// Public constructor that accepts a value of type string
+        /// </summary>
+        /// <param name="value">string value</param>
         public JSONStringValue(string value)
             : base()
         {
             this._value = value;
         }
 
+        /// <summary>
+        /// Required override of the ToString() method.
+        /// </summary>
+        /// <returns>contained string in JSON-compliant form</returns>
         public override string ToString()
         {
             return JSONStringValue.ToJSONString(this._value);
         }
 
+        /// <summary>
+        /// Required override of the PrettyPrint() method.
+        /// </summary>
+        /// <returns>this.ToString()</returns>
         public override string PrettyPrint()
         {
             return this.ToString();
         }
 
+        /// <summary>
+        /// Evaluates all characters in a string and returns a new string,
+        /// properly formatted for JSON compliance and bounded by double-quotes.
+        /// </summary>
+        /// <param name="text">string to be evaluated</param>
+        /// <returns>new string, in JSON-compliant form</returns>
         public static string ToJSONString(string text)
         {
             char[] charArray = text.ToCharArray();
