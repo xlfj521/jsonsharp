@@ -31,7 +31,7 @@ A JSON object is either an unordered object collection of random name/value pair
 Given that, the premise behind JSONSharp is pretty simple. Using the abstracted ToString() method in JSONValue, the JSONObjectCollection and JSONArrayCollection objects walk their internal collections and write the data using the implementation's given rules, as defined in ToString().
 
 ==An example==
-This fully-working example is available in the [http://jsonsharp.googlecode.com/svn/trunk/dotnet2.0/JSONSharpExample/ source tree].
+This fully-working example is available in the [http://jsonsharp.googlecode.com/svn/trunk/dotnet2.0/JSONSharpExample/ source tree]. As a disclaimer, this code is intentionally verbose to show as many part of the library as feasible.
 
 {{{
 using System;
