@@ -4,3 +4,7 @@ JSONSharp is a C# library for constructing JSON-compliant data strings.  It's li
 
 
 ==Structure==
+JSONSharp objects have two jobs: (1) accept/hold data values, and (2) write them as JSON-compliant strings.
+
+The base object of JSONSharp is the JSONValue.  Everything in JSONSharp inherits from JSONValue.  JSONValue is an 
+abstract class, requiring implementors to override two methods: ToString() and PrettyPrint().
