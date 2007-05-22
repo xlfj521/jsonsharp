@@ -1,0 +1,12 @@
+The mono project files are built using monodevelop, a free GNOME 
+development environment for Mono. monodevelop can be downloaded for free 
+at http://www.monodevelop.com.
+
+monodevelop projects do not work with files outside the project 
+directory. In order to share source files, the monodevelop project files 
+here are built using a symbolic link to the src directory.
+
+If your unfamiliar, enter the following after cwd to /mono:
+ln -s ./../src/ src
+
+
