@@ -25,3 +25,7 @@ JSONSharp supports two collection types: object collections and arrays.
  * JSONObjectCollection accepts a Dictionary of name/value pairs, passed as either an instance of type Dictionary<JSONStringValue,JSONValue> or through individual Add() method calls.  The "name" of an entry is a JSONStringValue; the "value" of the pair is any JSONValue, which could be a JSONSharp value type OR collection type.
  * JSONArrayCollection accepts a generic List of JSONValue objects, passed as either an instance of type List<JSONValue> or through individual Add() method calls.
 
+==How it works==
+A JSON object is either an unordered object collection of random name/value pairs, or an array of elements. Members of both object collections or arrays are either strings, numbers, booleans, null, or other object collections or arrays.
+
+Given that, the premise behind JSONSharp is pretty simple. Using the abstracted ToString() method in JSONValue, the JSONObjectCollection and JSONArrayCollection objects walk their internal collections and write the data using the implementation's given rules, as defined in ToString().
