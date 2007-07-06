@@ -1,0 +1,8 @@
+#labels Featured
+= Release 1.1 =
+
+Release 1.1 is marked by the addition of the JSONReflector class.  JSONReflector accepts an instance of any object and uses standard reflection routines to generate a JSON object.
+
+JSONReflector has initially been constructed to generate JSON objects from both value and reference object types, but is constrained to value-type public properties.  Generics aren't yet supported, though we expect to add those in the future.
+
+An example application is included in the source code as well as the zip downloads.
