@@ -10,11 +10,52 @@ namespace JSONSharpExample
     class Program
     {
         /// <summary>
-        /// An example implementation of JSONSharp. The location of a purveyor of fine aleas is used 
+        /// An example implementation of JSONSharp. The location of a purveyor of fine ales is used 
         /// to show how different data types are handled when converted to JSON format at render time.
         /// </summary>
         /// <param name="args">command-line arguments; none used in this example</param>
         static void Main(string[] args)
+        {
+            Program.ManualWay();
+            Program.ReflectiveWay();
+        }
+
+        static void ReflectiveWay()
+        {
+            //Construct my own custom object
+            Tavern tavern = new Tavern();
+            tavern.Business = "Tractor Tavern";
+            tavern.Address = "5213 Ballard Ave NW";
+            tavern.City = "Seattle";
+            tavern.State = "WA";
+            tavern.Zipcode = 98107;
+            tavern.Latitude = 47.665663;
+            tavern.Longitude = -122.382343;
+            tavern.CoverCharge = true;
+            tavern.Url = "http://tractortavern.citysearch.com/";
+            tavern.AddPaymentMethod(PaymentMethod.Cash);
+            tavern.AddPaymentMethod(PaymentMethod.Visa);
+            tavern.AddPaymentMethod(PaymentMethod.Mastercard);
+            tavern.AddPaymentMethod(PaymentMethod.AmericanExpress);
+
+            //Pass it to our static reflector, which will build
+            JSONReflector jsonReflector = new JSONReflector(tavern);
+
+            // The ToString() is the compact representation of the object's JSON output
+            Console.WriteLine("JSONReflector.ToString()");
+            Console.WriteLine("===============================");
+            Console.WriteLine(jsonReflector.ToString());
+            Console.WriteLine("===============================");
+            Console.WriteLine();
+            // PrettyPrint() is great for readability
+            Console.WriteLine("JSONReflector.PrettyPrint()");
+            Console.WriteLine("===============================");
+            Console.WriteLine(jsonReflector.PrettyPrint());
+            Console.WriteLine("===============================");
+            
+        }
+
+        static void ManualWay()
         {
             // Create a Dictionary of name/value pairs for the entire JSON object
             Dictionary<JSONStringValue, JSONValue> jsonNameValuePairs = new Dictionary<JSONStringValue, JSONValue>();
@@ -85,5 +126,6 @@ namespace JSONSharpExample
             Console.WriteLine(jsonObjectCollection.PrettyPrint());
             Console.WriteLine("===============================");
         }
+
     }
 }

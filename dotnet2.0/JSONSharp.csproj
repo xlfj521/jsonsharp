@@ -50,6 +50,8 @@ If you have questions about the library, please contact me at jeff.rodenburg@gma
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Collections\JSONArrayCollection.cs" />
@@ -59,6 +61,7 @@ If you have questions about the library, please contact me at jeff.rodenburg@gma
     <Compile Include="..\src\Values\JSONStringValue.cs" />
     <Compile Include="..\src\JSONValue.cs" />
     <Compile Include="..\src\JSONValueCollection.cs" />
+    <Compile Include="..\src\JSONReflector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

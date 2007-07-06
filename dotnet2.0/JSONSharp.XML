@@ -141,6 +141,34 @@
             Required override of the EndMarker property
             </summary>
         </member>
+        <member name="T:JSONSharp.JSONReflector">
+            <summary>
+            JSONReflector provides a convenient way to convert value and reference type objects
+            to JSON format through reflection.
+            
+            This implementation build JSON around reflected public properties of type int, float,
+            double, decimal, byte, string, bool, enum or array.  (Generics and other types may be
+            supported at a later time.)
+            </summary>
+        </member>
+        <member name="M:JSONSharp.JSONReflector.#ctor(System.Object)">
+            <summary>
+            Public constructor that accepts any object
+            </summary>
+            <param name="objValue">object to be reflected/evaluated for JSON conversion</param>
+        </member>
+        <member name="M:JSONSharp.JSONReflector.ToString">
+            <summary>
+            Required override of the ToString() method.
+            </summary>
+            <returns>returns the internal JSONObjectCollection ToString() method</returns>
+        </member>
+        <member name="M:JSONSharp.JSONReflector.PrettyPrint">
+            <summary>
+            Required override of the PrettyPrint() method.
+            </summary>
+            <returns>returns the internal JSONObjectCollection PrettyPrint() method</returns>
+        </member>
         <member name="T:JSONSharp.Values.JSONStringValue">
             <summary>
             JSONStringValue is a collection of zero or more Unicode characters, wrapped in double quotes, 
