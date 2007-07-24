@@ -1,0 +1,58 @@
+#labels Deprecated
+= How to convert ASP.NET user controls to JSON =
+
+=== The problem ===
+So, you've implemented your ASP.NET website with pages and user controls.  Next, you're implementing some ajax callbacks to dynamically update some information on your page.  But the info you want to update has a bunch of styling around it, and all the presentation logic is already wrapped up in a user control.
+
+=== What to do? ===
+Of course you can return a big chunk of HTML and just swap it out on the page.  But what if you're returning multiple pieces of information, that go in different places of the page, i.e. not in a nice html-sequential order?  How do you keep from repeating code while also being efficient?
+
+You _could_ execute sequential ajax callbacks to get your formatted info piece by piece, but that's slow. If you could return all the pieces back as JSON, you could work with the presentation chunks more efficiently.  So, *how do we get user controls to return in json format?*
+
+=== The solution ===
+Override the System.Web.UI.UserControl Render method on a user control.
+
+===============================================================================
+= An example =
+
+=== Getting started ===
+  #) "Browser" web page (.aspx) that returns standard HTML (usually called by the browser as part of site navigation)
+  #) Javascript on the web page that executes ajax request and ensuing html dom update
+  #) "Ajax" web page (.aspx) that receives the ajax callback request (usually called by ajax requests, returns data in json format)
+  #) User control(s) that live on both the browser-based and ajax-based web pages
+
+=== BrowserPage.aspx ===
+{{{
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="BrowserPage.aspx.cs" Inherits="BrowserPage" Title="Untitled Page" %>
+<%@ Register TagName="DualControl" TagPrefix="my" Src="~/Controls/DualControl.ascx" %>
+
+<html>
+<head>
+
+<script type="text/javascript">
+function changeContent() {
+  var divcontent = $("content_div");
+  divcontent.innerHTML="";
+  $("spinner").toggle();
+  new Ajax.Request('/AjaxPage.aspx', {method:'get', onSuccess:changeFunc});
+}
+
+function changeFunc(t) {
+  var ajax_content = eval('('+t.responseText+')');
+  var divcontent = $("content_div");
+  $("spinner").toggle();
+  divcontent.innerHTML=ajax_content.dual_control;
+}
+</script>
+</head>
+<body>
+    <p>The BrowserPage is (normally) loaded from a browser.<p/>
+    <p>The content below can be <a href="javascript:changeContent();">updated</a>.<p/>
+    <img id="spinner" src="/spinner.gif" style="display:none" alt="loading" />
+    <div id="content_div">
+        <my:DualControl runat="server" ID="DualControl1" visible="true"/>
+    </div>
+</body>
+</html>
+
+}}}
