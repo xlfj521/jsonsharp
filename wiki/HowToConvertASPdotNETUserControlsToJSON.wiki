@@ -25,47 +25,101 @@ Override the System.Web.UI.UserControl Render method on a user control to return
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="BrowserPage.aspx.cs" Inherits="BrowserPage" Title="Untitled Page" %>
 <%@ Register TagName="DualControl" TagPrefix="my" Src="~/DualControl.ascx" %>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
-<script type="text/javascript">
+<title>BrowserPage</title>
+<script language="javascript" type="text/javascript" src="prototype.js"></script>
+<script language="javascript" type="text/javascript" src="scriptaculous.js"></script>
+<script language="javascript" type="text/javascript">
 function changeContent() {
   var divcontent = $("content_div");
   divcontent.innerHTML="";
-  $("spinner").toggle();
   new Ajax.Request('/AjaxPage.aspx', {method:'get', onSuccess:changeFunc});
 }
 
 function changeFunc(t) {
   var ajax_content = eval('('+t.responseText+')');
   var divcontent = $("content_div");
-  $("spinner").toggle();
+  pausecomp(1000);
   divcontent.innerHTML=ajax_content.dual_control;
 }
+
+// http://www.sean.co.uk/a/webdesign/javascriptdelay.shtm
+function pausecomp(millis) {
+  var date = new Date();
+  var curDate = null;
+  do { curDate = new Date(); }
+  while(curDate-date < millis);
+}
+
 </script>
 </head>
 <body>
-    <p>The BrowserPage is (normally) loaded from a browser.<p/>
-    <p>The content below can be <a href="javascript:changeContent();">updated</a>.<p/>
-    <img id="spinner" src="/spinner.gif" style="display:none" alt="loading" />
+    <h1>Welcome to BrowserPage</h1>
+    <p>The BrowserPage is (normally) loaded from a browser.</p>
+    <p>The content below can be <a href="javascript:changeContent();">updated</a>.</p>
     <div id="content_div">
         <my:DualControl runat="server" ID="DualControl1" visible="true"/>
     </div>
 </body>
 </html>
+}}}
 
+=== BrowserPage.aspx.cs ===
+{{{
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class BrowserPage : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.DataBind();
+    }
+}
 }}}
 
 === AjaxPage.aspx ===
 {{{
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="AjaxPage.aspx.cs" Inherits="AjaxPage" %>
 <%@ Register TagName="DualControl" TagPrefix="my" Src="~/DualControl.ascx" %>
-
 {
 "dual_control":
-<my:DualControl runat="server" ID="DualControl1" visible="true"/>
+<my:DualControl WriteAsJSON="true" runat="server" ID="DualControl1" visible="true"/>
 }
 }}}
+
+
+=== AjaxPage.aspx.cs ===
+{{{
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class AjaxPage : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.DataBind();
+    }
+}
+}}}
+
 
 === DualControl.ascx ===
 {{{
@@ -73,7 +127,7 @@ function changeFunc(t) {
 <asp:Repeater ID="rptrULOfProgressiveTime" runat="server">
   <HeaderTemplate>
     <h2>Progressive time-list</h2>
-    <p>This list starts with the current time, then adds 5 seconds to each entry.</p>
+    <p>This list starts with the current time, then adds 10 seconds to each entry.</p>
     <ul>
   </HeaderTemplate>
   <ItemTemplate>
@@ -83,14 +137,14 @@ function changeFunc(t) {
     </ul>
   </FooterTemplate>
 </asp:Repeater>
-<ul>
-</ul>
 }}}
+
 
 === DualControl.ascx.cs ===
 {{{
 using System;
 using System.Data;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
@@ -103,16 +157,21 @@ using JSONSharp;
 public partial class DualControl : System.Web.UI.UserControl
 {
     public bool WriteAsJSON = false;
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
 
     protected override void OnDataBinding(EventArgs e)
     {
-        base.OnDataBinding(e);
         List<DateTime> dtList = new List<DateTime>();
-        this.rptrULOfProgressiveTime;
+        for (int x = 1; x <= 5; x++)
+        {
+            dtList.Add(DateTime.Now.AddSeconds((x - 1) * 10));
+        }
+        this.rptrULOfProgressiveTime.DataSource = dtList;
+        base.OnDataBinding(e);
     }
 
     protected override void Render(HtmlTextWriter writer)
@@ -130,6 +189,5 @@ public partial class DualControl : System.Web.UI.UserControl
             base.Render(writer);
         }
     }
-  
 }
 }}}
