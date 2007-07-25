@@ -10,21 +10,20 @@ Of course you can return a big chunk of HTML and just swap it out on the page.  
 You _could_ execute sequential ajax callbacks to get your formatted info piece by piece, but that's slow. If you could return all the pieces back as JSON, you could work with the presentation chunks more efficiently.  So, *how do we get user controls to return in json format?*
 
 === The solution ===
-Override the System.Web.UI.UserControl Render method on a user control.
+Override the System.Web.UI.UserControl Render method on a user control to return the entire rendered control as a JSON string.
 
 ===============================================================================
 = An example =
 
 === Getting started ===
-  #) "Browser" web page (.aspx) that returns standard HTML (usually called by the browser as part of site navigation)
-  #) Javascript on the web page that executes ajax request and ensuing html dom update
+  #) "Browser" web page (.aspx) that returns standard HTML (usually called by the browser as part of site navigation) with javascript on the page that executes ajax request and ensuing html dom update
   #) "Ajax" web page (.aspx) that receives the ajax callback request (usually called by ajax requests, returns data in json format)
   #) User control(s) that live on both the browser-based and ajax-based web pages
 
 === BrowserPage.aspx ===
 {{{
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="BrowserPage.aspx.cs" Inherits="BrowserPage" Title="Untitled Page" %>
-<%@ Register TagName="DualControl" TagPrefix="my" Src="~/Controls/DualControl.ascx" %>
+<%@ Register TagName="DualControl" TagPrefix="my" Src="~/DualControl.ascx" %>
 
 <html>
 <head>
@@ -55,4 +54,82 @@ function changeFunc(t) {
 </body>
 </html>
 
+}}}
+
+=== AjaxPage.aspx ===
+{{{
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AjaxPage.aspx.cs" Inherits="AjaxPage" %>
+<%@ Register TagName="DualControl" TagPrefix="my" Src="~/DualControl.ascx" %>
+
+{
+"dual_control":
+<my:DualControl runat="server" ID="DualControl1" visible="true"/>
+}
+}}}
+
+=== DualControl.ascx ===
+{{{
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="DualControl.ascx.cs" Inherits="DualControl" %>
+<asp:Repeater ID="rptrULOfProgressiveTime" runat="server">
+  <HeaderTemplate>
+    <h2>Progressive time-list</h2>
+    <p>This list starts with the current time, then adds 5 seconds to each entry.</p>
+    <ul>
+  </HeaderTemplate>
+  <ItemTemplate>
+      <li><%# Convert.ToString(Container.DataItem) %></li>
+  </ItemTemplate>
+  <FooterTemplate>
+    </ul>
+  </FooterTemplate>
+</asp:Repeater>
+<ul>
+</ul>
+}}}
+
+=== DualControl.ascx.cs ===
+{{{
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using JSONSharp;
+
+public partial class DualControl : System.Web.UI.UserControl
+{
+    public bool WriteAsJSON = false;
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+    }
+
+    protected override void OnDataBinding(EventArgs e)
+    {
+        base.OnDataBinding(e);
+        List<DateTime> dtList = new List<DateTime>();
+        this.rptrULOfProgressiveTime;
+    }
+
+    protected override void Render(HtmlTextWriter writer)
+    {
+        if (this.WriteAsJSON)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            System.IO.TextWriter tw = new System.IO.StringWriter(sb);
+            HtmlTextWriter htwJson = new HtmlTextWriter(tw);
+            base.Render(htwJson);
+            writer.Write(JSONStringValue.ToJSONString(sb.ToString()));
+        }
+        else
+        {
+            base.Render(writer);
+        }
+    }
+  
+}
 }}}
