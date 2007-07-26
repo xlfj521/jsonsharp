@@ -19,7 +19,7 @@ Check out the example below.  The key components here:
   #) "Ajax" web page (.aspx) that receives the ajax callback request (usually called by ajax requests, returns data in json format)
   #) User control(s) that live on both the browser-based and ajax-based web pages
 
-To facilitate the output to JSON, I added a public bool property "WriteAsJSON" to the user control, which is defaulted to false.  The control resides on both the BrowserPage.aspx as well as AjaxPage.aspx.  The default assignment is used on BrowserPage; AjaxPage assigns the WriteAsJSON property to true.
+To facilitate the output to JSON, I added a public bool property "WriteAsJSON" to the user control, which is defaulted to false.  The control resides on both the !BrowserPage.aspx as well as !AjaxPage.aspx.  The default assignment is used on !BrowserPage; !AjaxPage assigns the WriteAsJSON property to true.
 
 I also included the prototype.js and scriptaculous.js libraries because they reduce my need to write javascript.  There are lots of libraries like these around; I'm partial to these two.  Please see [http://www.prototypejs.org/ http://www.prototypejs.org/] and [http://script.aculo.us/ http://script.aculo.us/].
 
@@ -28,7 +28,7 @@ This example code can be *[http://jsonsharp.googlecode.com/files/ASPdotNETContro
 ===============================================================================
 = An example =
 
-=== BrowserPage.aspx ===
+=== !BrowserPage.aspx ===
 {{{
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="BrowserPage.aspx.cs" Inherits="BrowserPage" Title="Untitled Page" %>
 <%@ Register TagName="DualControl" TagPrefix="my" Src="~/DualControl.ascx" %>
@@ -73,7 +73,7 @@ function pausecomp(millis) {
 </html>
 }}}
 
-=== BrowserPage.aspx.cs ===
+=== !BrowserPage.aspx.cs ===
 {{{
 using System;
 using System.Data;
