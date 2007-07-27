@@ -10,7 +10,7 @@ Of course you can return a big chunk of HTML and just swap it out on the page.  
 You _could_ execute sequential ajax callbacks to get your formatted info piece by piece, but that's slow. If you could return all the pieces back as JSON, you could work with the presentation chunks more efficiently.  So, *how do we get user controls to return in json format?*
 
 === A solution ===
-Override the !System.Web.UI.UserControl Render method on a user control to return the entire rendered control as a JSON string.
+Override the System.Web.UI.!UserControl Render method on a user control to return the entire rendered control as a JSON string.
 
 By capturing the rendered output of a !UserControl (or an ASPX Page, for that matter), we can convert the html to a JSON-compliant string.  This allows us to re-use our complex and impressive presentation and formatting logic (;-) for AJAX updates.
 
