@@ -22,6 +22,10 @@ namespace JSONSharp
 
         private JSONValue GetJSONValue(object objValue)
         {
+        		if (objValue == null)
+        		{
+        				return null;
+        		}
             Type thisType = objValue.GetType();
             JSONValue jsonValue = null;
 
