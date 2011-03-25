@@ -87,8 +87,6 @@ namespace JSONSharp.Values
                     output.Add("\\n");
                 else if (((int)c) == 34)        //Double-quotes (")
                     output.Add("\\" + c.ToString());
-                else if (((int)c) == 44)        //Comma (,)
-                    output.Add("\\" + c.ToString());
                 else if (((int)c) == 47)        //Solidus   (/)
                     output.Add("\\" + c.ToString());
                 else if (((int)c) == 92)        //Reverse solidus   (\)
